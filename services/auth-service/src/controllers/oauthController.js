@@ -31,7 +31,6 @@ const redirect = (req, res) => {
   );
 };
 
-// GET /api/auth/google/callback
 const callback = async (req, res) => {
   const { code, error } = req.query;
 
@@ -42,7 +41,6 @@ const callback = async (req, res) => {
     return res.status(400).json({ message: 'Authorization code tidak ditemukan.' });
   }
 
-  // Cegah double-request dari browser
   if (usedCodes.has(code)) {
     return res.status(400).json({ message: 'Authorization code sudah digunakan.' });
   }
@@ -50,7 +48,6 @@ const callback = async (req, res) => {
   setTimeout(() => usedCodes.delete(code), 60_000);
 
   try {
-    // Pakai URLSearchParams + force IPv4 — fix AggregateError Node 18+
     const tokenRes = await axios.post(
       'https://oauth2.googleapis.com/token',
       new URLSearchParams({

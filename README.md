@@ -139,4 +139,12 @@ Semua request dari Postman dikirim ke `http://localhost:8000`.
 1. Buka [Google Cloud Console](https://console.cloud.google.com)
 2. APIs & Services → Credentials → Create OAuth 2.0 Client ID
 3. Authorized redirect URI: `http://localhost:8000/api/auth/google/callback`
-4. Salin Client ID dan Secret ke `.env` auth-service
+4. Salin Client ID dan Secret ke `.env` auth-service# UTS PPLOS — Sistem Pemesanan Tiket Event
+
+| | |
+|---|---|
+| **Nama** | [Ricky Satria Atmaja] |
+| **NIM** | [2410511070] |
+| **Kelas** | B |
+| **Studi Kasus** | Sistem Pemesanan Tiket Event (digit NIM: 0) |
+| **OAuth** | Google OAuth 2.0 (NIM Genap) |# uts-pplos-b-2410511070
