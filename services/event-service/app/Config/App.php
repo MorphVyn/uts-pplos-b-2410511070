@@ -16,7 +16,11 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
+<<<<<<< HEAD
     public string $baseURL = 'http://localhost:8002/';
+=======
+    public string $baseURL = 'http://localhost:8080/';
+>>>>>>> origin/feature/event-ticket
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.

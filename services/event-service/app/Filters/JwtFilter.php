@@ -21,12 +21,23 @@ class JwtFilter implements FilterInterface
                 ->setJSON(['message' => 'Token tidak ditemukan.']);
         }
 
+<<<<<<< HEAD
         $token  = substr($header, 7);
         $secret = env('JWT_SECRET') ?: getenv('JWT_SECRET') ?: ($_ENV['JWT_SECRET'] ?? null);
 
         try {
             $decoded       = JWT::decode($token, new Key($secret, 'HS256'));
             $request->user = $decoded;
+=======
+        $token = substr($header, 7);
+
+        log_message('error', 'TOKEN: ' . $token);
+        log_message('error', 'SECRET: ' . env('JWT_SECRET'));
+
+        try {
+            $decoded        = JWT::decode($token, new Key(env('JWT_SECRET'), 'HS256'));
+            $request->user  = $decoded;
+>>>>>>> origin/feature/event-ticket
         } catch (ExpiredException) {
             return \Config\Services::response()
                 ->setStatusCode(401)
@@ -39,4 +50,8 @@ class JwtFilter implements FilterInterface
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null) {}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/feature/event-ticket
