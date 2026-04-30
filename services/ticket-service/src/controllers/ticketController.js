@@ -5,7 +5,6 @@ const db     = require('../db/database');
 
 const EVENT_URL = process.env.EVENT_SERVICE_URL || 'http://localhost:8002';
 
-// POST /api/checkout
 const checkout = async (req, res) => {
   const { event_id, category_id, quantity = 1 } = req.body;
   const userId = req.user.sub;
@@ -15,7 +14,6 @@ const checkout = async (req, res) => {
   }
 
   try {
-    // Ambil info kategori dari event-service
     const catRes  = await axios.get(
       `${EVENT_URL}/api/events/${event_id}/categories/${category_id}`,
       { headers: { Authorization: req.headers['authorization'] } }
@@ -53,7 +51,6 @@ const checkout = async (req, res) => {
       tickets.push({ ticket_code: ticketCode, qr_code: qrData });
     }
 
-    // Update sold di event-service (fire-and-forget)
     axios.put(
       `${EVENT_URL}/api/events/${event_id}/categories/${category_id}`,
       { sold: category.sold + quantity },
@@ -70,12 +67,11 @@ const checkout = async (req, res) => {
     if (err.response?.status === 404) {
       return res.status(404).json({ message: 'Event atau kategori tidak ditemukan.' });
     }
-    console.error(err.message);
+    console.error('CHECKOUT ERR:', err.message, '| status:', err.response?.status, '| data:', JSON.stringify(err.response?.data));
     return res.status(500).json({ message: 'Gagal memproses checkout.' });
   }
 };
 
-// GET /api/tickets
 const getMyTickets = async (req, res) => {
   const userId  = req.user.sub;
   const page    = parseInt(req.query.page     || '1');
@@ -97,7 +93,6 @@ const getMyTickets = async (req, res) => {
   });
 };
 
-// GET /api/tickets/:id
 const getTicket = async (req, res) => {
   const [rows] = await db.execute(
     'SELECT * FROM tickets WHERE id = ? AND user_id = ?',
@@ -107,7 +102,6 @@ const getTicket = async (req, res) => {
   return res.json({ data: rows[0] });
 };
 
-// POST /api/tickets/:ticketCode/validate
 const validateTicket = async (req, res) => {
   const [rows] = await db.execute(
     'SELECT * FROM tickets WHERE ticket_code = ?', [req.params.ticketCode]
